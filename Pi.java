@@ -1,8 +1,10 @@
-
+/**
+ * This is a new comment
+ */
 public class Pi
 {
     public static void main(String[] args) {
-        // check if the argument entered is greater than default value (=70)
+        // check if an argument is entered
         int decimalCount = 70;
         if (args.length > 0) {
             decimalCount = Integer.valueOf(args[0]);
@@ -34,7 +36,7 @@ public class Pi
             m = m.mul(ten);
         }
 
-        System.out.print("forbidden pi = ");
+        System.out.print("pi = ");
         String intPart = res.toIntString();
         System.out.print(intPart);
         System.out.print(".");

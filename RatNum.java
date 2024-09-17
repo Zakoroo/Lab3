@@ -196,18 +196,7 @@ class RatNum
     }
 
     public RatNum pow(int n) {
-        RatNum res = new RatNum(this);
-        if(n == 0) {
-            return new RatNum(1);
-        }
-        else if(n < 0) {
-            return new RatNum(this.denominator, this.numerator).pow(-n);
-        }
-        for(; n > 1; --n) {
-            res.numerator = res.numerator.multiply(res.numerator);
-            res.denominator = res.denominator.multiply(res.denominator);
-        }
-        return new RatNum(res.numerator, res.denominator);
+        return new RatNum(this.numerator.pow(n), this.denominator.pow(n));
     }
 
     /**
