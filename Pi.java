@@ -38,7 +38,7 @@ public class Pi
             m = m.mul(ten);
         }
 
-        System.out.print("forbidden pi = ");
+        System.out.print("pi = ");
         String intPart = res.toIntString();
         System.out.print(intPart);
         System.out.print(".");
