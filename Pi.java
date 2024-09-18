@@ -1,8 +1,12 @@
-
+/**
+ * @author Hussein Hafid
+ * @author Najib Alkaddour
+ * @since 2024-09-17
+ */
 public class Pi
 {
     public static void main(String[] args) {
-        // check if the argument entered is greater than default value (=70)
+        // check if some value was entered
         int decimalCount = 70;
         if (args.length > 0) {
             decimalCount = Integer.valueOf(args[0]);

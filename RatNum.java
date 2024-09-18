@@ -3,22 +3,26 @@ import java.math.BigInteger;
 /**
  * @author Hussein Hafid
  * @author Najib Alkaddour
- * @since 2024-09-10
+ * @since 2024-09-17
  */
 class RatNum
 {
     private BigInteger numerator;
     private BigInteger denominator;
 
-    // TODO: Add doc string
+    /**
+     * <b>Private constructor</b>
+     * <p>Initializes the numerator and denominator according to the specified values.</p>
+     * @param a The numerator
+     * @param b The denominator
+     */
     private RatNum(BigInteger a, BigInteger b) {
         switch(b.compareTo(BigInteger.ZERO)) {
-            case 0:
-                throw new NumberFormatException("Denominator = 0");
-            case -1:
+            case 0 -> throw new NumberFormatException("Denominator = 0");
+            case -1 -> {
                 a = a.negate();
                 b = b.negate();
-                break;
+            }
         }
         
         BigInteger gcd = a.gcd(b);
@@ -28,8 +32,7 @@ class RatNum
 
     /**
      * <b>Constructor</b>
-     * <p>Initializes the numerator to 0 and the denomintor to 1.</p>
-     * @return this functions has no return values
+     * <p>Initializes the numerator to 0 and the denominator to 1.</p>
      */
     public RatNum() {
         this(BigInteger.ZERO);
@@ -37,15 +40,18 @@ class RatNum
 
     /**
      * <b>Constructor</b>
-     * <p>Initializes the numerator to what value is given as a paramter and the denomintor to 1.</p>
-     * @param a of type int
-     * @return this functions has no return values
+     * <p>Initializes the numerator to the specified value and the denominator to 1.</p>
+     * @param a The numerator
      */
     public RatNum(int a) {
         this(BigInteger.valueOf(a));
     }
 
-    // TODO: Add doc string
+    /**
+     * <b>Private constructor</b>
+     * <p>Initializes the numerator to the specified value and the denominator to 1.</p>
+     * @param a The numerator
+     */
     private RatNum(BigInteger a) {
         this.numerator = a;
         this.denominator = BigInteger.ONE;
@@ -53,10 +59,9 @@ class RatNum
 
     /**
      * <b>Constructor</b>
-     * <p>Initializes the numerator and denominator according to what values are provided.</p>
-     * @param a of type int
-     * @param b of type int
-     * @return this functions has no return values
+     * <p>Initializes the numerator and denominator according to the specified values.</p>
+     * @param a The numerator
+     * @param b The denominator
      */
     public RatNum(int a, int b) {
         this(BigInteger.valueOf(a), BigInteger.valueOf(b));
@@ -64,9 +69,8 @@ class RatNum
 
     /**
      * <b>Constructor</b>
-     * <p>Creates a new RatNum object with the same values of the inputed RatNum r.</p>
-     * @param r of type RatNum
-     * @return this functions has no return values
+     * <p>Initializes the numerator and denominator according to the same values of the provided RatNum object.</p>
+     * @param r The rational number object
      */
     public RatNum(RatNum r) {
         this.numerator = r.numerator;
@@ -75,9 +79,8 @@ class RatNum
     
     /**
      * <b>Constructor</b>
-     * <p>Creates a new RatNum object with the same values of the inputed string representation "a/b" or "a"</p>
-     * @param  s of type string
-     * @return this functions has no return values
+     * <p>Initializes the numerator and denominator from a string formatted as "a" or "a/b".</p>
+     * @param  s A string representing a rational number
      */
     public RatNum(String s) {
         this(parse(s));
@@ -85,7 +88,7 @@ class RatNum
 
     /**
      * <p>Returns the value of the numerator as an integer value.</p>
-     * @return numerator of type int
+     * @return The numerator to this rational number
      */
     public int getNumerator() {
         return this.numerator.intValue();
@@ -93,15 +96,15 @@ class RatNum
 
     /**
      * <p>Returns the value of the denominator as an integer value.</p>
-     * @return denominator of type int
+     * @return The denominator to this rational number
      */
     public int getDenominator() {
         return this.denominator.intValue();
     }
 
     /**
-     * <p>This method returns the string representation of the rational number.</p>
-     * @return string representing a rational number in the format "a/b"
+     * <p>Returns the string representation of the rational number.</p>
+     * @return A string representing a rational number in the format "a/b"
      */
     @Override
     public String toString() {
@@ -109,9 +112,9 @@ class RatNum
     }
 
     /**
-     * <p>This parses a string to a RatNum object.</p>
-     * @param s of type string representing a rational number in the format "a/b" or "a"
-     * @return object of type RatNum
+     * <p>Parses a string to a RatNum object.</p>
+     * @param s A string representing a rational number in the format "a" or "a/b"
+     * @return The rational number object corresponding to the inputted string
      */
     public static RatNum parse(String s) {
         if (!s.contains("/")) {
@@ -129,29 +132,37 @@ class RatNum
     }
 
     /**
-     * <p>This method checks wether the given rational number equals the current rational number
-     * based on their numerators and denominators.</p>
-     * @param r of type RatNum
-     * @return boolean
+     * <p>Checks whether the given object equals the this rational number.</p>
+     * @param r The object to compare
+     * @return True if the rational numbers are equal, otherwise false
      */
-    public boolean equals(RatNum r) {
-        return this.numerator.compareTo(r.numerator) == 0 && this.denominator.compareTo(r.denominator) == 0;
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
+        else if(obj.getClass() != this.getClass())
+            return false;
+        else if(obj == this)
+            return true;
+        else {
+            RatNum r = (RatNum) obj;
+            return this.numerator.compareTo(r.numerator) == 0 && this.denominator.compareTo(r.denominator) == 0;
+        }
     }
 
     /**
-     * <p>This method checks if the given rational number is less than the current rational
-     * number</p>
-     * @param r of type RatNum
-     * @return boolean
+     * <p>Checks if the given rational number is less than the current rational number.</p>
+     * @param r The rational number to compare
+     * @return True if the given rational number is less than this, otherwise false
      */
     public boolean lessThan(RatNum r) {
         return this.numerator.multiply(r.denominator).compareTo(r.numerator.multiply(this.denominator)) == -1;
     }
 
     /**
-     * <p>This method mathematically adds the current rational number to the given rational number</p>
-     * @param r of type RatNum
-     * @return the sum of the current rational number and the inputed one
+     * <p>Adds this rational number to the given rational number.</p>
+     * @param r The rational number to be added to this
+     * @return The sum of this and the given rational number
      */
     public RatNum add(RatNum r) {
         BigInteger a = this.numerator.multiply(r.denominator).add(this.denominator.multiply(r.numerator));
@@ -160,10 +171,9 @@ class RatNum
     }
 
     /**
-     * <p>This method mathematically subtracts the given rational number from the current rational
-     * number</p>
-     * @param r of type RatNum
-     * @return the difference between the current rational number and the inputed one
+     * <p>Subtracts the given rational number from this.</p>
+     * @param r The rational number to be subtracted from this
+     * @return This difference between this and the inputted rational number
      */
     public RatNum sub(RatNum r) {
         BigInteger a = this.numerator.multiply(r.denominator).subtract(this.denominator.multiply(r.numerator));
@@ -172,10 +182,9 @@ class RatNum
     }
 
     /**
-     * <p>This method mathematically muliplicates the given rational number and the current rational
-     * number</p>
-     * @param r of type RatNum
-     * @return the product of the current rational number and the inputed one
+     * <p>Multiplies the given rational number with this.</p>
+     * @param r The rational number to multiplicate this with
+     * @return The product of this and the inputted rational number
      */
     public RatNum mul(RatNum r) {
         BigInteger a = this.numerator.multiply(r.numerator);
@@ -184,10 +193,9 @@ class RatNum
     }
 
     /**
-     * <p>This method mathematically divides the current rational number by the given rational
-     * number</p>
-     * @param r of type RatNum
-     * @return the quotient of the current rational number and the inputed one
+     * <p>Divides this by the given rational number.</p>
+     * @param r The rational number this gets divided by
+     * @return The quotient of this and the inputted rational number
      */
     public RatNum div(RatNum r) {
         BigInteger a = this.numerator.multiply(r.denominator);
@@ -195,52 +203,48 @@ class RatNum
         return new RatNum(a, b);
     }
 
+    /**
+     * <p>Raises this rational number to the power of inputted value.</p>
+     * @param n The exponent to which this will be raised
+     * @return The result of the exponentiation
+     */
     public RatNum pow(int n) {
-        RatNum res = new RatNum(this);
-        if(n == 0) {
+        if(n == 0)
             return new RatNum(1);
-        }
-        else if(n < 0) {
-            return new RatNum(this.denominator, this.numerator).pow(-n);
-        }
-        for(; n > 1; --n) {
-            res.numerator = res.numerator.multiply(res.numerator);
-            res.denominator = res.denominator.multiply(res.denominator);
-        }
-        return new RatNum(res.numerator, res.denominator);
+        else if(n < 0)
+            return new RatNum(this.numerator.pow(-n), this.denominator.pow(-n));
+        else
+            return new RatNum(this.numerator.pow(n), this.denominator.pow(n));
     }
 
     /**
-     * <p>This method returns the integer value of the current rational number in from of a
-     * string.</p>
-     * @return s of type String
+     * <p>Returns the integer value of the current rational number in from of a string.</p>
+     * @return A string representing the integer division of this rational number
      */
     public String toIntString() {
         return this.numerator.divide(this.denominator).toString();
     }
     
     /**
-     * <p>This method computes the greatest common divisor "gcd" of two given numbers a and b.
+     * <p>This method computes the greatest common divisor "gcd" of two given integers a and b.
      * This method implements the Euclidean algorithm. For more info visit
      * <a href="https://en.wikipedia.org/wiki/Greatest_common_divisor#Euclidean_algorithm">
      * Wikipedia</a>.</p>
-     * @param a of type int
-     * @param b of type int
-     * @return gcd of type int
+     * @param a The first value
+     * @param b The second value
+     * @return The greatest common divisor of a and b
      */
     public static int gcd(int a, int b) {
+        if(a == 0 && b == 0)
+            throw new IllegalArgumentException();
+        if(b == 0 || a == 0) {
+            return b == 0 ? a : b;
+        }
+        
         b = Math.abs(b);
         a = Math.abs(a);
+
         int temp;
-        if (a == 0 && b == 0)
-            throw new IllegalArgumentException();
-
-        if (b == 0 || a == 0) {
-            if (b == 0)
-                return a;
-            return b;
-        }
-
         if (b > a) {
             temp = b;
             b = a;
@@ -255,14 +259,5 @@ class RatNum
             }
         }
         return b;
-    }
-
-    public static void main(String[] args) {
-        RatNum r = new RatNum("10/3");
-
-        r = r.pow(4);
-
-        System.out.println("");
-        System.out.println(r);
     }
 }
